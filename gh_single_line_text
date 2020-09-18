@@ -1,0 +1,22 @@
+__author__ = "Chaoyu"
+__version__ = "2020.09.18"
+
+import Rhino
+import ghpythonlib.treehelpers as th
+
+sc.doc = Rhino.RhinoDoc.ActiveDoc
+
+text_geo = []
+normal = Rhino.Geometry.Vector3d(0, 0, 1)
+for i, t in enumerate(text):
+    txt = Rhino.Geometry.TextEntity()
+    
+    txt.FontIndex = Rhino.RhinoDoc.ActiveDoc.Fonts.FindOrCreate(font, False, False)
+    txt.Text = t
+    txt.Plane = Rhino.Geometry.Plane(location[i], normal)
+    txt.TextHeight = size
+    
+    a = txt.Explode()
+    text_geo.append(a)
+
+text_geo = th.list_to_tree(text_geo)
